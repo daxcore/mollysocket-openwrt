@@ -1,0 +1,32 @@
+name: build
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        release:
+          - 24.10.6
+        arch:
+          - mediatek-filogic
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build
+        uses: openwrt/gh-action-sdk@main
+        env:
+          ARCH: ${{ matrix.arch }}-${{ matrix.release }}
+          PACKAGES: mollysocket
+          NO_REFRESH_CHECK: true
+
+      - name: Upload packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: mollysocket-${{ matrix.arch }}_${{ matrix.release }}
+          path: bin/packages/**/mollysocket*.ipk

@@ -1,0 +1,11 @@
+--- a/src/ws/signalwebsocket.rs	2026-03-15 01:41:34.560891701 +0100
++++ b/src/ws/signalwebsocket.rs	2026-03-15 01:42:06.353413942 +0100
+@@ -34,7 +34,7 @@
+ /// to check if we have the good one.
+ /// The delivery check is useful in case the user has migrated to another mollysocket
+ /// instance, but we are still connected, causing an error 4409 on the other instance
+-const DELIVERY_CHECK_TIMEOUT: Duration = Duration::from_hours(1);
++const DELIVERY_CHECK_TIMEOUT: Duration = Duration::from_secs(3600);
+
+ #[derive(Debug)]
+ pub struct Channels {

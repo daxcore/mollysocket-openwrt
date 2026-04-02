@@ -1,0 +1,37 @@
+--- a/Cargo.toml	2026-02-10 22:56:46.000000000 +0100
++++ b/Cargo.toml	2026-03-15 01:15:52.192622322 +0100
+@@ -30,7 +30,7 @@
+ log = "0.4.29"
+ native-tls = "0.2.14"
+ prost = "0.14"
+-reqwest = { version = "0.13.1", features = ["json"]}
++reqwest = { version = "0.13.1", features = ["json", "native-tls"]}
+ serde = { version = "1.0.228", features = ["derive"]}
+ tokio-tungstenite = { version = "0.28.0", features = ["native-tls", "url"] }
+ tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+--- a/Cargo.lock	2026-03-15 01:22:07.222533250 +0100
++++ b/Cargo.lock	2026-03-15 01:23:02.433381692 +0100
+@@ -197,9 +197,9 @@
+
+ [[package]]
+ name = "aws-lc-rs"
+-version = "1.15.4"
++version = "1.16.0"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "7b7b6141e96a8c160799cc2d5adecd5cbbe5054cb8c7c4af53da0f83bb7ad256"
++checksum = "d9a7b350e3bb1767102698302bc37256cbd48422809984b98d292c40e2579aa9"
+ dependencies = [
+  "aws-lc-sys",
+  "zeroize",
+@@ -207,9 +207,9 @@
+
+ [[package]]
+ name = "aws-lc-sys"
+-version = "0.37.0"
++version = "0.37.1"
+ source = "registry+https://github.com/rust-lang/crates.io-index"
+-checksum = "5c34dda4df7017c8db52132f0f8a2e0f8161649d15723ed63fc00c82d0f2081a"
++checksum = "b092fe214090261288111db7a2b2c2118e5a7f30dc2569f1732c4069a6840549"
+ dependencies = [
+  "cc",
+  "cmake",
