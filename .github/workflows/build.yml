@@ -1,0 +1,59 @@
+name: build
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: true
+      matrix:
+        release:
+          - 25.12.2
+        arch:
+          - mediatek-filogic
+    steps:
+      - name: Checkout current repository
+        uses: actions/checkout@v6
+
+      - name: Extract package version
+        id: get_version
+        run: |
+          PKG_VERSION=$(grep -r '^PKG_VERSION:=' | cut -d '=' -f2)
+          echo "pkg_version=$PKG_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Build package for OpenWRT
+        uses: daxcore/gh-action-sdk@main
+        env:
+          ARCH: ${{ matrix.arch }}-${{ matrix.release }}
+          PACKAGES: mollysocket
+          NO_SHFMT_CHECK: true
+          INDEX: 1
+          PRIVATE_KEY: ${{ secrets.SIGNKEY }}
+          # rust 1.94 update (at least 1.91 is required) + rust: set llvm.download-ci-llvm=false fix
+          DEFAULT_FEEDS: packages|https://github.com/openwrt/packages.git^0bcc41f3617e9041513a779a8a54f7fecae1efcd
+          V: w
+
+      - name: Extract public key from signing key
+        if: env.HAS_SIGNKEY == 'true'
+        env:
+          HAS_SIGNKEY: ${{ secrets.SIGNKEY != '' }}
+        run: |
+          echo "${{ secrets.SIGNKEY }}" | openssl ec -pubout -out openwrt-daxcore.pem
+
+      - name: Upload packages
+        uses: actions/upload-artifact@v7
+        with:
+          name: mollysocket-${{ steps.get_version.outputs.pkg_version }}-openwrt-${{ matrix.release }}-${{ matrix.arch }}
+          path: bin/packages/**/mollysocket*.apk
+
+      - name: Release package
+        uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
+        with:
+          files: |
+            bin/packages/**/action/mollysocket*.apk
+            bin/packages/**/action/packages.adb
+            openwrt-daxcore.pem
