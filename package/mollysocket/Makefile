@@ -22,7 +22,7 @@ define Package/mollysocket
   CATEGORY:=Utilities
   TITLE:=MollySocket UnifiedPush bridge
   URL:=https://github.com/mollyim/mollysocket
-  DEPENDS:=$(RUST_ARCH_DEPENDS) +libopenssl +libsqlite3 +libedit
+  DEPENDS:=$(RUST_ARCH_DEPENDS) +libopenssl +libsqlite3 +libedit +libncurses
 endef
 
 define Package/mollysocket/description
