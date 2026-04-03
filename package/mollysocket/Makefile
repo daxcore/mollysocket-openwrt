@@ -1,12 +1,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=mollysocket
-PKG_VERSION:=1.7.0
+PKG_VERSION:=1.7.1
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/mollyim/mollysocket/tar.gz/$(PKG_VERSION)?
-PKG_HASH:=db9d913af9e285422f260397acbf4341d48c1e7d2e0b50b08b209e2101a63fea
+PKG_HASH:=b380faf8ca526e92bcbc121d8ac35b88945a6f62b4602dea0df6f7c1f6bfaac7
 
 PKG_LICENSE:=AGPL-3.0
 PKG_LICENSE_FILES:=LICENSE
@@ -30,7 +30,7 @@ define Package/mollysocket/description
 endef
 
 define Package/mollysocket/conffiles
-/etc/mollysocket.conf
+	/etc/mollysocket.conf
 endef
 
 define Package/mollysocket/install
