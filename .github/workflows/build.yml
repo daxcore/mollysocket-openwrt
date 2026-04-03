@@ -9,7 +9,7 @@ jobs:
       fail-fast: true
       matrix:
         release:
-          - openwrt-24.10
+          - openwrt-25.12
         arch:
           - mediatek-filogic
     steps:
@@ -22,18 +22,18 @@ jobs:
         env:
           ARCH: ${{ matrix.arch }}-${{ matrix.release }}
           PACKAGES: mollysocket
-          NO_REFRESH_CHECK: true
+          #NO_REFRESH_CHECK: true
           NO_SHFMT_CHECK: true
-          NO_DEFAULT_FEEDS: true
-          EXTRA_FEEDS: >-
-            src-git|packages|https://github.com/openwrt/packages.git;${{ matrix.release }}
-            src-git|luci|https://github.com/openwrt/luci.git;${{ matrix.release }}
-            src-git|routing|https://github.com/openwrt/routing.git;${{ matrix.release }}
-            src-git|telephony|https://github.com/openwrt/telephony.git;${{ matrix.release }}
-          V: s
+          #NO_DEFAULT_FEEDS: true
+          #EXTRA_FEEDS: >-
+          #  src-git|packages|https://github.com/openwrt/packages.git;${{ matrix.release }}
+          #  src-git|luci|https://github.com/openwrt/luci.git;${{ matrix.release }}
+          #  src-git|routing|https://github.com/openwrt/routing.git;${{ matrix.release }}
+          #  src-git|telephony|https://github.com/openwrt/telephony.git;${{ matrix.release }}
+          V: sc
 
       - name: Upload packages
         uses: actions/upload-artifact@v4
         with:
           name: mollysocket-${{ matrix.arch }}_${{ matrix.release }}
-          path: bin/packages/**/mollysocket*.ipk
+          path: bin/packages/**/mollysocket*.apk
