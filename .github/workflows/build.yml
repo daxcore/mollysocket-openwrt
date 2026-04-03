@@ -1,6 +1,5 @@
 name: build
 on:
-  workflow_call:
   workflow_dispatch:
 
 jobs:
@@ -10,7 +9,7 @@ jobs:
       fail-fast: true
       matrix:
         release:
-          - 24.10.5
+          - openwrt-24.10
         arch:
           - mediatek-filogic
     steps:
@@ -27,10 +26,10 @@ jobs:
           NO_SHFMT_CHECK: true
           NO_DEFAULT_FEEDS: true
           EXTRA_FEEDS: >-
-            src-git|packages|https://github.com/openwrt/packages.git;openwrt-24.10
-            src-git|luci|https://github.com/openwrt/luci.git;openwrt-24.10
-            src-git|routing|https://github.com/openwrt/routing.git;openwrt-24.10
-            src-git|telephony|https://github.com/openwrt/telephony.git;openwrt-24.10
+            src-git|packages|https://github.com/openwrt/packages.git;${{ matrix.release }}
+            src-git|luci|https://github.com/openwrt/luci.git;${{ matrix.release }}
+            src-git|routing|https://github.com/openwrt/routing.git;${{ matrix.release }}
+            src-git|telephony|https://github.com/openwrt/telephony.git;${{ matrix.release }}
           V: s
 
       - name: Upload packages
