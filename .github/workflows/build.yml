@@ -11,7 +11,7 @@ jobs:
       fail-fast: true
       matrix:
         release:
-          - 25.12.2
+          - 25.12.4
         arch:
           - mediatek-filogic
     steps:
@@ -25,15 +25,13 @@ jobs:
           echo "pkg_version=$PKG_VERSION" >> $GITHUB_OUTPUT
 
       - name: Build package for OpenWRT
-        uses: daxcore/gh-action-sdk@main
+        uses: openwrt/gh-action-sdk@main
         env:
           ARCH: ${{ matrix.arch }}-${{ matrix.release }}
           PACKAGES: mollysocket
           NO_SHFMT_CHECK: true
           INDEX: 1
           PRIVATE_KEY: ${{ secrets.SIGNKEY }}
-          # rust 1.94 update (at least 1.91 is required) + rust: set llvm.download-ci-llvm=false fix
-          DEFAULT_FEEDS: packages|https://github.com/openwrt/packages.git^0bcc41f3617e9041513a779a8a54f7fecae1efcd
           V: w
 
       - name: Extract public key from signing key
