@@ -5,7 +5,7 @@ START=95
 STOP=10
 
 PROG=/usr/bin/mollysocket
-CONF=/etc/mollysocket.conf
+CONF=/etc/mollysocket/config.toml
 
 start_service() {
 	procd_open_instance
